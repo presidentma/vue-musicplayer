@@ -12,6 +12,7 @@ const express = require('express')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = require('./webpack.dev.conf')
+const axios = require('axios')
 
 // default port where dev server listens for incoming traffic
 const port = process.env.PORT || config.dev.port
@@ -22,6 +23,25 @@ const autoOpenBrowser = !!config.dev.autoOpenBrowser
 const proxyTable = config.dev.proxyTable
 
 const app = express()
+// 代理请求QQ音乐api开始
+var apiRoutes = express.Router()
+apiRoutes.get('/getDiscList', function(req, res) {
+  var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
+  axios.get(url, {
+    headers: {
+      referer: 'https://y.qq.com/portal/playlist.html',
+      host: 'y.qq.com'
+    },
+    params: req.query
+  }).then((qqres) => {
+    res.json(qqres.data)
+  }).catch((e) => {
+    alert('歌单数据获取有误')
+  })
+})
+
+app.use('/api', apiRoutes)
+// 代理请求QQ音乐api结束
 const compiler = webpack(webpackConfig)
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {

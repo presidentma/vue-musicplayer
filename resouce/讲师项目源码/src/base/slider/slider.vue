@@ -52,7 +52,7 @@
           return
         }
         this._setSliderWidth(true)
-        this.slider.refresh()
+    //    this.slider.refresh()
       })
     },
     destroyed() {
@@ -93,7 +93,7 @@
             pageIndex -= 1
           }
           this.currentPageIndex = pageIndex
-
+          console.log(pageIndex)
           if (this.autoPlay) {
             clearTimeout(this.timer)
             this._play()
