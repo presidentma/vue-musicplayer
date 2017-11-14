@@ -237,6 +237,9 @@ export default {
     },
     onPercentChange(newPercent) {
       this.$refs.audio.currentTime = newPercent * this.currentSong.duration
+      if (!this.playing) {
+        this.togglePlaying()
+      }
     },
     ...mapMutations({
       setFullScreen: 'SET_FULLSCREEN',

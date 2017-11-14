@@ -1,5 +1,5 @@
 <template>
-<div class="progress-bar" ref="progressBar">
+<div class="progress-bar" ref="progressBar" @click="progressClick">
   <div class="bar-inner">
     <div class="progress" ref="progress"></div>
       <div class="progress-btn-wrapper" @touchstart.prevent="progressTouchStart"
@@ -53,6 +53,10 @@ export default {
       const barBackgroundWidth = this.$refs.progressBar.clientWidth - barWidth
       const percent = this.$refs.progress.clientWidth / barBackgroundWidth
       this.$emit('percentChange', percent)
+    },
+    progressClick(e) {
+      this._pad(e.offsetX)
+      this._triggerPercent()
     }
   },
   watch: {
