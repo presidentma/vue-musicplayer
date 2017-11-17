@@ -40,6 +40,29 @@ apiRoutes.get('/getDiscList', function(req, res) {
   })
 })
 
+apiRoutes.get('/lyric', function(req, res) {
+  var url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
+  axios.get(url, {
+    headers: {
+      referer: 'https://y.qq.com/portal/player.html',
+      host: 'y.qq.com'
+    },
+    params: req.query
+  }).then((qqres) => {
+    var ret = qqres.data
+    if (typeof ret === 'string') {
+      var reg = /^\w+\(({[^()]+})\)$/
+      var matches = ret.match(reg)
+      if (matches) {
+        ret = JSON.parse(matches[1])
+      }
+    }
+    res.json(ret)
+  }).catch((e) => {
+    alert('歌词数据获取有误')
+  })
+})
+
 app.use('/api', apiRoutes)
 // 代理请求QQ音乐api结束
 const compiler = webpack(webpackConfig)

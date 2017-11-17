@@ -11,7 +11,7 @@
         </ul>
     </li>
 </ul>
-<div class="list-shortcut" @touchstart="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove">
+<div v-show="shortcutList.length>0" class="list-shortcut" @touchstart="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove">
 <ul>
   <li v-for="(item, index) in shortcutList" class="item" :data-index="index" :class="{'current': currentIndex == index}">
     {{item}}
@@ -214,5 +214,5 @@ export default {
         top: 50%
         transform: translateY(-50%)
 
-            
+
 </style>
