@@ -67,6 +67,9 @@ export default {
     scroll(position) {
       this.scrollY = position.y
     },
+    refresh() {
+      this.$refs.listview.refresh()
+    },
     onShortcutTouchStart(element) {
       let firstTouch = element.touches[0]
       let ancharIndex = getData(element.target, 'index')
